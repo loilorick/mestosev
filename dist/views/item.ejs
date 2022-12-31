@@ -1,0 +1,70 @@
+<%- include('particles/header.ejs') %>
+
+<%- include('particles/navigation.ejs') %>
+
+<div style="display: block; margin-left: auto; margin-right: auto; width: min-content; margin-top: 20px;">
+  
+    <% if(item.author == username) { %>
+    <a href="/items/<%= item.id %>/change" class="form-button">Изменить</a>
+    <% } %>
+    <div class="section" style="height: fit-content;">
+      <div>
+        <h2 class="section__title"><%= item.title %></h2>
+        <img class="section__image" src="/img/<%= item.image %>">
+      </div>
+      <div>
+        <p class="section__description"><%= item.description %></p>
+        <div style="width: auto; padding: 0%; font-size: smaller;">
+          <p style="width: max-content; color: blue; font-weight: bold; display: inline; margin-right: 10px;">
+            Автор - <%= item.author %>
+          </p>
+          <p style="color: gray; display: block;">
+            Добавлено - <%= item.date_creating %>
+          </p>
+        </div>
+      </div>
+    </div>
+</div>
+<p class="comment__title">Комментарии<%if(comments.length==0){%> отсутствуют<%}else{%>:<%}%></p>
+
+<% for (let i=0; i < comments.length; i++) { %>
+
+<div class="comment__block">
+    <div style=" padding: 0%;">
+        <p
+            style="width: max-content; color: orange; font-weight: bold; display: inline; margin-right: 10px;">
+            <%=comments[i].author%>
+        </p>
+        <p style="color: gray; display: inline; position: static; right: 100px; ">
+            Добавлено - <%=comments[i].date%>
+        </p>
+    </div>
+
+    <p class="comment__description">
+        <%=comments[i].commentary%>
+    </p>
+    <% if(comments[i].author == username){ %>
+    <form action="/deleteCommentary" method="post">
+        <input type="hidden" value="<%=comments[i].id%>" type="text" name="idComment">
+        <input type="hidden" value="<%= item.id %>" type="text" name="id">
+        <input type="submit" class="form-button" value="Удалить">
+    </form>
+    <% } %>
+</div>
+<% } %>
+
+<% if(auth) { %>
+<form action="/addCommentary" method="post">
+
+    <div class="comment__block">
+        <p style="margin-left: 5px;">Добавить комментарий</p>
+        <span>
+            <input type="text" name="commentary" class="comment">
+            <input type="hidden" value="<%= item.id %>" type="text" name="id">
+            <input type="submit" class="form-button" value="Добавить">
+        </span>
+    </div>
+</form>
+<% } %>
+
+<%- include('particles/footer.ejs') %>
