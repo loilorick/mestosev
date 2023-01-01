@@ -1,0 +1,39 @@
+<div class="navigation" id="header">
+
+  <h1 class="name" style="cursor: pointer;"><a href="#" style="text-decoration: none; color: rgb(58, 56, 56);">MESTOSEV</a></h1>
+
+  <form action="/logout" method="post">
+    <% if(auth) { %>
+      <p class="navigation__user" style="
+        float: right;
+        background: orange;
+        padding: 3px;
+        border-radius: 5px;
+        font-size: 18px;
+        text-align: center;
+        cursor: pointer;">
+        Аккаунт:
+        <span style="font-weight: 600;"><%=username%></span>
+      </p>
+      <% } %>
+        <a href="/" class="navigation__item">Главная</a>
+
+
+        <% if(auth) { %>
+          <a href="/add" class="navigation__item">Добавить</a>
+
+          <div class="dropdown">
+            <a class="navigation__item">Категории</a>
+            <div class="dropdown-content">
+              <a href="#">Музеи</a>
+              <a href="#">Кинотеатры</a>
+              <a href="#">Остальное</a>
+            </div>
+          </div>
+
+          <input class="navigation__exit" type="submit" value="Выйти" style="float: right; margin-right: 10px;">
+          <% } else {%>
+            <a href="/login" class="navigation__item">Авторизоваться</a>
+            <% } %>
+  </form>
+</div>
